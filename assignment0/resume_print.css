@@ -1,5 +1,9 @@
 @media print {
-  #profilephoto {
+  :root {
+    border: 2px solid black;
+  }
+
+  #background {
     display: none;
   }
 }

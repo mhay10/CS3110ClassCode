@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	margin: 0 auto;
+	width: fit-content;
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+}
+
+#header {
+	display: column;
+	flex-direction: column;
+	column-span: 2;
+	justify-content: center;
+}
+
+
+.section {
+	width: 100%;
+	border-top: 1px solid black;
+}
+
+#education {
+
+}
+
+#experience {
+	.jobentry:not(:last-child) {
+		border-bottom: 1px dotted grey;
+	}
+
+	.jobentry {
+		.jobinfo {
+
+		}
+
+		.jobdesc {
+			list-style: none;
+
+			li {
+				margin-bottom: 2px;
+			}
+		}
+	}
+}
+
+#projects {
+
+}
+
+#skills {
+	ul {
+		list-style: none;
+	}
+}
