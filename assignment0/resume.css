@@ -1,57 +1,105 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-	font-family: "Roboto", sans-serif;
-	text-align: center;
-	margin: 0 auto;
-	width: fit-content;
-	border-left: 2px solid black;
-	border-right: 2px solid black;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  margin: 0 auto;
+  width: 950px;
+}
+
+#background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("background.jpg") repeat;
+}
+
+#resume {
+  background-color: white;
+  padding: 20px;
 }
 
 #header {
-	display: column;
-	flex-direction: column;
-	column-span: 2;
-	justify-content: center;
+  display: column;
+  flex-direction: column;
+  column-span: 2;
+  justify-content: center;
 }
-
 
 .section {
-	width: 100%;
-	border-top: 1px solid black;
-}
-
-#education {
-
+  border-top: 1px solid black;
 }
 
 #experience {
-	.jobentry:not(:last-child) {
-		border-bottom: 1px dotted grey;
-	}
+  .jobentry:not(:last-child) {
+    border-bottom: 1px dotted grey;
+  }
 
-	.jobentry {
-		.jobinfo {
+  .jobentry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
 
-		}
+    div {
+      width: 50%;
 
-		.jobdesc {
-			list-style: none;
+      .jobinfo {
+        line-height: 1.5;
 
-			li {
-				margin-bottom: 2px;
-			}
-		}
-	}
+        .jobdate {
+          font-style: italic;
+          color: #888;
+        }
+      }
+    }
+
+    .jobdesc {
+      width: 50%;
+
+      li {
+        margin-bottom: 2px;
+        text-align: left;
+      }
+    }
+  }
 }
 
 #projects {
+  .projectentry:not(:last-child) {
+    border-bottom: 1px dotted grey;
+  }
 
+  .projectentry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .projecttitle {
+      width: 50%;
+    }
+
+    .projectdesc {
+      width: 50%;
+      text-align: left;
+      margin-left: 10px;
+    }
+  }
 }
 
 #skills {
-	ul {
-		list-style: none;
-	}
+  #skilltable {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid black;
+      padding: 8px;
+			width: calc(100% / 3)
+      /* text-align: left; */
+    }
+  }
 }

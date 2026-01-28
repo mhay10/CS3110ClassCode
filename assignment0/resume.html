@@ -12,86 +12,102 @@
   <body>
     <div id="background"></div>
 
-    <header id="header">
-      <h1>Maxwell Hay</h1>
-      <p>
-        Denver, CO <br />
-        <a class="contactinfo" href="tel:+17192558227">(719) 255 8227</a> <br />
-        <a class="contactinfo" href="mailto:mhay@uccs.edu">mhay@uccs.edu</a>
-        <br />
-      </p>
-    </header>
-
-    <section id="education" class="section">
-      <h2 class="sectiontitle">Education</h2>
-      <p>
-        Bachelor's of Computer Science <i>(May 2026)</i> <br />
-        University of Colorado - Colorado Springs <br />
-        GPA: 3.59
-      </p>
-    </section>
-
-    <section id="experience" class="section">
-      <h2 class="sectiontitle">Experience</h2>
-
-      <div class="jobentry">
-        <h3>Service Desk Technician - University of Colorado</h3>
-        <p class="jobinfo">
+    <div id="resume">
+      <header id="header">
+        <h1>Maxwell Hay</h1>
+        <p>
           Colorado Springs, CO <br />
-          August 2022 - Present
+          <a class="contactinfo" href="tel:+17192558227">(719) 255 8227</a>
+          <br />
+          <a class="contactinfo" href="mailto:mhay@uccs.edu">mhay@uccs.edu</a>
+          <br />
         </p>
-        <ul class="jobdesc">
-          <li>Provide technical support to customers</li>
-          <li>Maintain accurate records of customer interactions</li>
-          <li>Assist with the training of new help desk staff</li>
-        </ul>
-      </div>
+      </header>
 
-      <div class="jobentry">
-        <h3 class="sectiontitle">Software Development Intern - Spectrum</h3>
-        <p class="jobinfo">
-          Denver, CO <br />
-          May 2025 - August 2025
+      <section id="education" class="section">
+        <h2 class="sectiontitle">Education</h2>
+        <p>
+          Bachelor's of Computer Science <i>(May 2026)</i> <br />
+          University of Colorado - Colorado Springs <br />
+          GPA: 3.59
         </p>
-        <ul class="jobdesc">
-          <li>Developed a metrics dashboard for application tracking</li>
-          <li>Helped design log parsers to extract relevant data</li>
-          <li>Collaborated with another intern to integrate log data</li>
-        </ul>
-      </div>
-    </section>
+      </section>
 
-    <section id="projects" class="section">
-      <h2 class="sectiontitle">Projects</h2>
+      <section id="experience" class="section">
+        <h2 class="sectiontitle">Experience</h2>
 
-      <div class="projectentry">
-        <h3>TVHead Emotions</h3>
-        <a class="projectlink" href="https://github.com/mhay10/tvhead-emotions" target="_blank">
-          Github Repository
-        </a>
-        <p class="projectdesc">
+        <article class="jobentry">
+          <div>
+            <h3>Service Desk Technician - University of Colorado</h3>
+            <p class="jobinfo">
+              <span class="joblocation">Colorado Springs, CO</span> <br />
+              <span class="jobdate">August 2022 - Present</span>
+            </p>
+          </div>
+          <ul class="jobdesc">
+            <li>Provided technical support to customers</li>
+            <li>Maintain accurate records of customer interactions</li>
+            <li>Assist with the training of new help desk staff</li>
+          </ul>
+        </article>
+
+        <article class="jobentry">
+          <div>
+            <h3 class="sectiontitle">Software Development Intern - Spectrum</h3>
+            <p class="jobinfo">
+              <span class="joblocation">Denver, CO</span> <br />
+              <span class="jobdate">May 2025 - August 2025</span>
+            </p>
+          </div>
+          <ul class="jobdesc">
+            <li>Developed a metrics dashboard for application tracking</li>
+            <li>Helped design log parsers to extract relevant data</li>
+            <li>Collaborated with another intern to integrate log data</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="projects" class="section">
+        <h2 class="sectiontitle">Projects</h2>
+
+        <article class="projectentry">
+          <h3 class="projecttitle">
+            TVHead Emotions &nbsp;(<a
+              class="projectlink"
+              href="https://github.com/mhay10/tvhead-emotions"
+              >Github Repository</a
+            >)
+          </h3>
+
+          <p class="projectdesc">
             Built a full-screen Python application to display and control
             animated facial expressions on a customizable TV-Head character.
-            <br />
             This was created as part of a wearable costume/cosplay and to
             explore user input handling and real-time animation.
-        </p>
-      </div>
-    </section>
+          </p>
+        </article>
+      </section>
 
-    <section id="skills" class="section">
-      <h2>Skills</h2>
-      <ul>
-        <li>
-          <b>Programming Languages:</b> C, C++, Python, Java, Javascript, C#,
-          Bash, Visual Basic, Go
-        </li>
-        <li><b>Databases:</b> SQL, SQLite, PostgreSQL, MariaDB, MongoDBF</li>
-        <li>
-          <b>Soft Skills:</b> Communication, Problem-Solving, Leadership,
-          Teamwork, Critical Thinking, Creativity, Determination
-        </li>
-      </ul>
-    </section>
+      <section id="skills" class="section">
+        <h2 class="sectiontitle">Skills </h2>
+
+        <table id="skilltable">
+          <thead>
+            <tr>
+              <th>Programming Languages</th>
+              <th>Technologies</th>
+              <th>Soft Skills</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Python, Java, C++, JavaScript, HTML, CSS</td>
+              <td>Docker, SSH, SQL, Linux, JIRA, Gradle</td>
+              <td>Communication, Problem Solving, Teamwork, Determination</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
   </body>
 </html>
