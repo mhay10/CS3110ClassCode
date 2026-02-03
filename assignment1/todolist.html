@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 1 - Todo List</title>
+
+    <link rel="stylesheet" href="todolist.css" />
+
+    <script src="todolist.js"></script>
+  </head>
+  <body>
+    <h1>Very Serious Todo List</h1>
+
+    <div id="newitem">
+      <input
+        type="text"
+        name="itemdesc"
+        id="itemdesc"
+        placeholder="Enter new item here"
+      />
+      <button id="additem">Add Item</button>
+    </div>
+
+    <div id="todolist">
+      <div class="todoitem">
+        <input type="checkbox" name="itemstatus" class="itemstatus" />
+        <p class="itemdesc">Complete homework assignments</p>
+      </div>
+      <div class="todoitem">
+        <input type="checkbox" name="itemstatus" class="itemstatus" checked />
+        <p class="itemdesc">Unify quantum physics and general relativity</p>
+      </div>
+      <div class="todoitem">
+        <input type="checkbox" name="itemstatus" class="itemstatus" />
+        <p class="itemdesc">Turn lead into gold</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+<template>
+  <div class="todoitem">
+    <input type="checkbox" name="itemstatus" class="itemstatus" />
+    <p class="itemdesc">Test Item</p>
+  </div>
+</template>
