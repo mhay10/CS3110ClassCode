@@ -3,10 +3,13 @@
 :root {
   --font-family: "Montserrat", sans-serif;
   font-family: var(--font-family);
-  font-optical-sizing: auto;
   font-style: normal;
   background-color: white;
   color: black;
+}
+
+.hidden {
+  display: none;
 }
 
 /* NEW ITEM INPUT STYLES */
@@ -40,6 +43,17 @@
   padding: 7px 15px;
 }
 
+#newitem #additem:hover {
+  background-color: black;
+  color: white; 
+  cursor: pointer;
+}
+
+/* TODO LIST STYLES */
+#todolist {
+  padding: 0;
+}
+
 /* TODO ITEM STYLES */
 .todoitem {
   display: flex;
@@ -48,6 +62,8 @@
   margin: 10px 0;
   border-radius: 7px;
   align-items: center;
+  list-style: none;
+  
 }
 
 .todoitem .itemstatus {
@@ -69,4 +85,14 @@
 
 .todoitem .itemdesc {
   width: 100%;
+}
+
+.todoitem .deletebutton {
+  font-family: var(--font-family);
+  font-size: 10pt;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 7px;
+  margin-left: 5px;
+  padding: 5px 7px;
 }

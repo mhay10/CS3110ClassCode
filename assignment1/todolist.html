@@ -12,36 +12,40 @@
   <body>
     <h1>Very Serious Todo List</h1>
 
-    <div id="newitem">
+    <form id="newitem">
       <input
         type="text"
         name="itemdesc"
         id="itemdesc"
         placeholder="Enter new item here"
       />
-      <button id="additem">Add Item</button>
-    </div>
+      <button id="additem" type="submit">Add Item</button>
+    </form>
 
-    <div id="todolist">
-      <div class="todoitem">
+    <ul id="todolist">
+      <li class="todoitem">
         <input type="checkbox" name="itemstatus" class="itemstatus" />
         <p class="itemdesc">Complete homework assignments</p>
-      </div>
-      <div class="todoitem">
+        <button class="hidden deletebutton">Delete</button>
+      </li>
+      <li class="todoitem">
         <input type="checkbox" name="itemstatus" class="itemstatus" checked />
         <p class="itemdesc">Unify quantum physics and general relativity</p>
-      </div>
-      <div class="todoitem">
+        <button class="deletebutton">Delete</button>
+      </li>
+      <li class="todoitem">
         <input type="checkbox" name="itemstatus" class="itemstatus" />
         <p class="itemdesc">Turn lead into gold</p>
-      </div>
-    </div>
+        <button class="hidden deletebutton">Delete</button>
+      </li>
+    </ul>
   </body>
 </html>
 
-<template>
-  <div class="todoitem">
+<template id="todoitem-template">
+  <li class="todoitem">
     <input type="checkbox" name="itemstatus" class="itemstatus" />
     <p class="itemdesc">Test Item</p>
-  </div>
+    <button class="hidden deletebutton">Delete</button>
+  </li>
 </template>
