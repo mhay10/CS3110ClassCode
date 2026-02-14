@@ -26,3 +26,11 @@ The project will also use the following tech stack:
 - Vue.js frontend
 - Express.js backend
 - MongoDB database
+
+# Plan for First Sprint
+
+For the first sprint of the project, I hope to implement the following
+
+- Get simple node server running
+- Create good mongoDB schema to use for storing data
+- Create simple welcoming homepage on frontend
