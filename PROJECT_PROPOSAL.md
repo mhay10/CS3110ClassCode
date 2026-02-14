@@ -27,7 +27,7 @@ The project will also use the following tech stack:
 - Express.js backend
 - MongoDB database
 
-# Plan for First Sprint
+## Plan for First Sprint
 
 For the first sprint of the project, I hope to implement the following
 
