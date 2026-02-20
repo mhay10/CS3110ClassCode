@@ -26,8 +26,8 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const ACSetupSvcPort: string;
 	export const ALLUSERSPROFILE: string;
+	export const ANTHROPIC_BASE_URL: string;
 	export const APPDATA: string;
 	export const CHROME_CRASHPAD_PIPE_NAME: string;
 	export const COLOR: string;
@@ -37,20 +37,31 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const CONDA_PROMPT_MODIFIER: string;
+	export const CSSCRIPT_INC: string;
+	export const CUDA_PATH: string;
+	export const CUDA_PATH_V12_9: string;
 	export const DriverData: string;
 	export const EDITOR: string;
-	export const EFC_11440_1592913036: string;
+	export const EFC_9076_1592913036: string;
+	export const FPS_BROWSER_APP_PROFILE_STRING: string;
+	export const FPS_BROWSER_USER_PROFILE_STRING: string;
 	export const GIT_ASKPASS: string;
+	export const GK_GL_ADDR: string;
+	export const GK_GL_PATH: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
 	export const HOMEPATH: string;
 	export const INIT_CWD: string;
+	export const JAVA_HOME: string;
 	export const JD2_HOME: string;
 	export const LANG: string;
 	export const LOCALAPPDATA: string;
 	export const LOGONSERVER: string;
 	export const NODE: string;
 	export const NODE_ENV: string;
+	export const NODE_EXE: string;
+	export const NODE_OPTIONS: string;
+	export const NPM_CLI_JS: string;
 	export const npm_command: string;
 	export const npm_config_cache: string;
 	export const npm_config_globalconfig: string;
@@ -70,16 +81,19 @@ declare module '$env/static/private' {
 	export const npm_package_json: string;
 	export const npm_package_name: string;
 	export const npm_package_version: string;
+	export const NPM_PREFIX_JS: string;
+	export const NPM_PREFIX_NPM_CLI_JS: string;
 	export const NUMBER_OF_PROCESSORS: string;
 	export const OneDrive: string;
 	export const OS: string;
 	export const Path: string;
 	export const PATHEXT: string;
+	export const POSH_AZURE_ENABLED: string;
 	export const POSH_CURSOR_COLUMN: string;
 	export const POSH_CURSOR_LINE: string;
+	export const POSH_GIT_ENABLED: string;
 	export const POSH_INSTALLER: string;
-	export const POSH_SESSION_ID: string;
-	export const POSH_SHELL: string;
+	export const POSH_PID: string;
 	export const POSH_SHELL_VERSION: string;
 	export const POSH_THEME: string;
 	export const POSH_THEMES_PATH: string;
@@ -94,11 +108,9 @@ declare module '$env/static/private' {
 	export const ProgramW6432: string;
 	export const PROMPT: string;
 	export const PSModulePath: string;
+	export const PT8HOME: string;
 	export const PUBLIC: string;
-	export const PYENV_VIRTUALENV_DISABLE_PROMPT: string;
-	export const PYTHONSTARTUP: string;
-	export const PYTHON_BASIC_REPL: string;
-	export const RlsSvcPort: string;
+	export const RTOOLS44_HOME: string;
 	export const SESSIONNAME: string;
 	export const SystemDrive: string;
 	export const SystemRoot: string;
@@ -110,16 +122,16 @@ declare module '$env/static/private' {
 	export const USERDOMAIN_ROAMINGPROFILE: string;
 	export const USERNAME: string;
 	export const USERPROFILE: string;
+	export const VBOX_MSI_INSTALL_PATH: string;
 	export const VIRTUAL_ENV_DISABLE_PROMPT: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
 	export const VSCODE_GIT_IPC_HANDLE: string;
 	export const VSCODE_INJECTION: string;
+	export const VSCODE_INSPECTOR_OPTIONS: string;
 	export const VSCODE_PYTHON_AUTOACTIVATE_GUARD: string;
 	export const windir: string;
-	export const ZES_ENABLE_SYSMAN: string;
-	export const __COMPAT_LAYER: string;
 }
 
 /**
@@ -149,8 +161,8 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		ACSetupSvcPort: string;
 		ALLUSERSPROFILE: string;
+		ANTHROPIC_BASE_URL: string;
 		APPDATA: string;
 		CHROME_CRASHPAD_PIPE_NAME: string;
 		COLOR: string;
@@ -160,20 +172,31 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		CONDA_PROMPT_MODIFIER: string;
+		CSSCRIPT_INC: string;
+		CUDA_PATH: string;
+		CUDA_PATH_V12_9: string;
 		DriverData: string;
 		EDITOR: string;
-		EFC_11440_1592913036: string;
+		EFC_9076_1592913036: string;
+		FPS_BROWSER_APP_PROFILE_STRING: string;
+		FPS_BROWSER_USER_PROFILE_STRING: string;
 		GIT_ASKPASS: string;
+		GK_GL_ADDR: string;
+		GK_GL_PATH: string;
 		HOME: string;
 		HOMEDRIVE: string;
 		HOMEPATH: string;
 		INIT_CWD: string;
+		JAVA_HOME: string;
 		JD2_HOME: string;
 		LANG: string;
 		LOCALAPPDATA: string;
 		LOGONSERVER: string;
 		NODE: string;
 		NODE_ENV: string;
+		NODE_EXE: string;
+		NODE_OPTIONS: string;
+		NPM_CLI_JS: string;
 		npm_command: string;
 		npm_config_cache: string;
 		npm_config_globalconfig: string;
@@ -193,16 +216,19 @@ declare module '$env/dynamic/private' {
 		npm_package_json: string;
 		npm_package_name: string;
 		npm_package_version: string;
+		NPM_PREFIX_JS: string;
+		NPM_PREFIX_NPM_CLI_JS: string;
 		NUMBER_OF_PROCESSORS: string;
 		OneDrive: string;
 		OS: string;
 		Path: string;
 		PATHEXT: string;
+		POSH_AZURE_ENABLED: string;
 		POSH_CURSOR_COLUMN: string;
 		POSH_CURSOR_LINE: string;
+		POSH_GIT_ENABLED: string;
 		POSH_INSTALLER: string;
-		POSH_SESSION_ID: string;
-		POSH_SHELL: string;
+		POSH_PID: string;
 		POSH_SHELL_VERSION: string;
 		POSH_THEME: string;
 		POSH_THEMES_PATH: string;
@@ -217,11 +243,9 @@ declare module '$env/dynamic/private' {
 		ProgramW6432: string;
 		PROMPT: string;
 		PSModulePath: string;
+		PT8HOME: string;
 		PUBLIC: string;
-		PYENV_VIRTUALENV_DISABLE_PROMPT: string;
-		PYTHONSTARTUP: string;
-		PYTHON_BASIC_REPL: string;
-		RlsSvcPort: string;
+		RTOOLS44_HOME: string;
 		SESSIONNAME: string;
 		SystemDrive: string;
 		SystemRoot: string;
@@ -233,16 +257,16 @@ declare module '$env/dynamic/private' {
 		USERDOMAIN_ROAMINGPROFILE: string;
 		USERNAME: string;
 		USERPROFILE: string;
+		VBOX_MSI_INSTALL_PATH: string;
 		VIRTUAL_ENV_DISABLE_PROMPT: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
 		VSCODE_GIT_IPC_HANDLE: string;
 		VSCODE_INJECTION: string;
+		VSCODE_INSPECTOR_OPTIONS: string;
 		VSCODE_PYTHON_AUTOACTIVATE_GUARD: string;
 		windir: string;
-		ZES_ENABLE_SYSMAN: string;
-		__COMPAT_LAYER: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}
