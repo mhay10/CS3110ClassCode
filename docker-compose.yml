@@ -17,3 +17,11 @@ services:
       - ./:/usr/share/nginx:ro
       - ./nginx-conf.d:/etc/nginx/conf.d:ro
     restart: unless-stopped
+
+  project:
+    image: node:current-alpine
+    container_name: project
+    working_dir: /app
+    volumes:
+      - ./project:/app
+    command: sh -c "npm install && npm run build"
