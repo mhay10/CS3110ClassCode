@@ -7,7 +7,7 @@
 </script>
 
 <Navbar class="sticky top-0 bg-gray-800 text-white p-2 w-full" fluid={true}>
-  <NavBrand href="/">
+  <NavBrand href="/" class="ml-40">
     <img src={tennisball} alt="tennis ball icon bg" />
     <span class="ml-4 self-center whitespace-nowrap text-xl font-semibold">
       Tennis Tournament Manager
@@ -15,7 +15,7 @@
   </NavBrand>
   <NavUl
     {activeUrl}
-    class="!w-auto ml-auto"
+    class="!w-auto ml-auto mr-50"
     classes={{
       active: "font-bold underline text-white",
       nonActive: "text-slate-300",

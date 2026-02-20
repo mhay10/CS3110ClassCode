@@ -20,7 +20,7 @@
 		"@tailwindcss/vite": "^4.1.18",
 		"flowbite": "^4.0.1",
 		"flowbite-svelte": "^1.31.0",
-		"flowbite-svelte-icons": "^3.1.0",
+		"heroicons-svelte": "^2.0.2",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
