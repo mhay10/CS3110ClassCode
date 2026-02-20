@@ -6,7 +6,7 @@
   const activeUrl = $derived(page.url.pathname);
 </script>
 
-<Navbar class="sticky top-0 bg-gray-800 text-white" fluid={true}>
+<Navbar class="sticky top-0 bg-gray-800 text-white p-2 w-full" fluid={true}>
   <NavBrand href="/">
     <img src={tennisball} alt="tennis ball icon bg" />
     <span class="ml-4 self-center whitespace-nowrap text-xl font-semibold">
@@ -15,10 +15,11 @@
   </NavBrand>
   <NavUl
     {activeUrl}
+    class="!w-auto ml-auto"
     classes={{
       active: "font-bold underline text-white",
       nonActive: "text-slate-300",
-      ul: "flex flex-col p-0 mt-2 md:flex-row space-x-4 mt-0 text-sm font-medium bg-gray-800",
+      ul: "flex-row p-0 space-x-4 mt-0 text-sm font-medium bg-gray-800",
     }}
   >
     <NavLi href="/">Home</NavLi>
