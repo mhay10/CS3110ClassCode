@@ -8,7 +8,7 @@
 </script>
 
 <section class="flex flex-col items-center">
-  <h1 class="text-4xl font-bold mt-7">Run Tennis Tournaments With Ease</h1>
+  <h1 class="text-4xl font-bold">Run Tennis Tournaments With Ease</h1>
   <p class="mt-5 text-lg mb-5">
     Manage and run tournaments without complex user interfaces
   </p>
