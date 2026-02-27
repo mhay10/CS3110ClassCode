@@ -20,7 +20,7 @@
 </section>
 
 <section class="flex mt-10 gap-20 items-center justify-center">
-  <GradientButton href="#" color="blue" size="xl" class="text-lg"
+  <GradientButton href="/create-tournament" color="blue" size="xl" class="text-lg"
     >Get Started</GradientButton
   >
   <Button
