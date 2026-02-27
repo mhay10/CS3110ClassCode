@@ -2,6 +2,13 @@
   import type { BracketCreationType } from "$lib/types/bracket-creation";
   import { Input, Label, Select } from "flowbite-svelte";
 
+  function createNewTournament(event: SubmitEvent) {
+    event.preventDefault();
+    console.log("Creating new tournament");
+
+    // TODO: POST form data to backend to create tournament
+  }
+
   let bracketCount = $state<number>(1);
   let bracketTypes = [
     { value: "singles", name: "Singles" },
@@ -10,13 +17,6 @@
   let selectedBracketTypes = $derived<BracketCreationType[]>(
     Array(bracketCount).fill({ type: "singles", numPlayers: 2 }),
   );
-
-  function createNewTournament(event: SubmitEvent) {
-    event.preventDefault();
-    console.log("Creating new tournament");
-
-    // TODO: POST form data to backend to create tournament
-  }
 </script>
 
 <h1 class="text-2xl font-bold mb-4">Create New Tournament</h1>
@@ -45,7 +45,7 @@
   </div>
 
   {#each { length: bracketCount }, i}
-    <article class="border p-4 rounded-md mb-4 bg-gray-50 border-gray-400">
+    <article class="border p-4 rounded-md mb-5 bg-gray-50 border-gray-400">
       <h2 class="text-xl font-semibold mb-2">Bracket {i + 1}</h2>
       <div class="mb-3">
         <Label for="bracket-type-{i}" class="font-medium">Bracket Type</Label>
@@ -54,6 +54,7 @@
           items={bracketTypes}
           bind:value={selectedBracketTypes[i].type}
           required
+          class="w-full rounded-md border-gray-400"
         />
       </div>
       <div class="mb-3">
@@ -72,8 +73,8 @@
 
   <button
     type="submit"
-    class="w-full bg-slate-400 text-white font-bold py-2 rounded-md"
+    class="w-full bg-slate-500 text-white font-bold py-2 rounded-md"
   >
-    Create Bracket
+    Create Tournament
   </button>
 </form>
