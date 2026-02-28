@@ -1,17 +1,26 @@
 <script lang="ts">
+  import type { BracketSelectionType } from "$lib/types/selectTournament";
   import { Label, Select } from "flowbite-svelte";
 
   function selectExistingTournaments(event: Event) {
+    // Prevent form submission from refreshing page
     event.preventDefault();
-    console.log("Selecting existing tournament");
+
+    // TODO: Redirect to bracket page with selected tournament
+    console.log("Selected tournament:", selectedTournament);
   }
 
-  // TODO: Change to GET request from backend
-  let tournaments = [
-    { value: "tournament1", name: "Tournament 1" },
-    { value: "tournament2", name: "Tournament 2" },
-    { value: "tournament3", name: "Tournament 3" },
-  ];
+  $effect(() => {
+    (async () => {
+      // Get tournaments from server using GET request
+      const response = await fetch("/api/get-tournaments", { method: "GET" });
+      const data = await response.json();
+      tournaments = data.tournaments;
+    })();
+  });
+
+  let tournaments = $state<BracketSelectionType[]>([]);
+  let selectedTournament = $state<string>("");
 </script>
 
 <h1 class="text-2xl font-bold mb-4">Select Existing Tournament</h1>
@@ -22,6 +31,7 @@
     <Select
       name="tournament-select"
       items={tournaments}
+      bind:value={selectedTournament}
       required
       class="w-full rounded-md border-gray-400"
     />

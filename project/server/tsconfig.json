@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "moduleResolution": "node16",
-    "types": ["node", "express"]
+    "types": ["node", "express", "nestdb"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
