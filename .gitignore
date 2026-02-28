@@ -1,8 +1,13 @@
+
 *.zip
 .env
 node_modules/
 .svelte-kit
 package-lock.json
+cloudflare.ini
+
+# Certificates
+certs/
 
 # Build outputs
 project/server/dist

@@ -3,17 +3,28 @@ services:
     image: nginx:latest
     container_name: nginx
     ports:
-      - 80:80 
+      - 80:80
+      - 443:443
     environment:
       - NGINX_HOST=maxwellhay.com
       - NGINX_PORT=80
     volumes:
       - ./:/usr/share/nginx:ro
       - ./nginx-conf.d:/etc/nginx/conf.d:ro
+      - ./certs:/etc/letsencrypt:ro
     restart: unless-stopped
-    depends_on:
-      - project-server
-      - project-client
+
+  certbot:
+    image: certbot/dns-cloudflare
+    container_name: certbot
+    volumes:
+      - ./certs:/etc/letsencrypt
+      - ./cloudflare.ini:/etc/cloudflare.ini
+    command: >
+      certonly --dns-cloudflare --dns-cloudflare-credentials /etc/cloudflare.ini
+      --preferred-challenges dns-01
+      --email mhay@uccs.edu --agree-tos --no-eff-email
+      -d maxwellhay.com -d *.maxwellhay.com"
 
   project-client:
     image: node:current-alpine
