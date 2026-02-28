@@ -19,12 +19,12 @@ services:
     container_name: certbot
     volumes:
       - ./certs:/etc/letsencrypt
-      - ./cloudflare.ini:/etc/cloudflare.ini
+      - ./cloudflare.ini:/etc/cloudflare.ini:ro
     command: >
       certonly --dns-cloudflare --dns-cloudflare-credentials /etc/cloudflare.ini
       --preferred-challenges dns-01
       --email mhay@uccs.edu --agree-tos --no-eff-email
-      -d maxwellhay.com -d *.maxwellhay.com"
+      -d maxwellhay.com -d *.maxwellhay.com
 
   project-client:
     image: node:current-alpine
