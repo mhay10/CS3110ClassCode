@@ -1,6 +1,10 @@
 *.zip
 .env
 node_modules/
-build
 .svelte-kit
 package-lock.json
+
+# Build outputs
+project/server/dist
+project/client/build
+
