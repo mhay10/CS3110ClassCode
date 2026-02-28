@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { db } from "./db.js";
+import { validateTournamentCreationRequest } from "./validation";
 
 // Serve static files from client build directory
 const root = "../client/build/";
@@ -31,7 +32,12 @@ app.get("/select-tournament", (req: Request, res: Response) => {
 // ====== API ROUTES ======
 
 app.post("/api/create-tournament", (req: Request, res: Response) => {
-  console.log(req.body);
+  const isValid = validateTournamentCreationRequest(req.body);
+  if (!isValid) {
+    res.status(400).json({ error: "Invalid tournament creation request" });
+    return;
+  }
+
   res.send("Balls itch");
 });
 
