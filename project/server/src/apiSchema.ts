@@ -1,4 +1,10 @@
 export interface CreateTournamentRequest {
   name: string;
-  brackets: [{ type: "singles" | "doubles"; numPlayers: number }];
+  brackets: [
+    {
+      name: string;
+      type: "singles" | "doubles";
+      numPlayers: number;
+    },
+  ];
 }

@@ -21,9 +21,8 @@ export interface Round {
 }
 
 export interface Bracket {
-  id: string;
+  name: string;
   type: "singles" | "doubles";
-  status: string;
   players: Player[];
   matches: Match[];
   rounds?: Round[];
@@ -32,7 +31,6 @@ export interface Bracket {
 export interface Tournament {
   name: string;
   createdAt: Date;
-  status: string;
   brackets: Bracket[];
 }
 
@@ -41,14 +39,22 @@ export function createPlayer(name: string, seed: number): Player {
 }
 
 export function createBracket(
+  name: string,
   type: "singles" | "doubles" = "singles",
 ): Bracket {
   return {
-    id: uuidv4(),
+    name,
     type,
-    status: "pending",
     players: [],
     matches: [],
+  };
+}
+
+export function createTournament(name: string): Tournament {
+  return {
+    name,
+    createdAt: new Date(),
+    brackets: [],
   };
 }
 
@@ -83,13 +89,4 @@ export function generateMatchRounds(bracket: Bracket): Bracket {
 
   bracket.rounds = rounds;
   return bracket;
-}
-
-export function createTournamentObj(name: string): Tournament {
-  return {
-    name,
-    createdAt: new Date(),
-    status: "upcoming",
-    brackets: [],
-  };
 }

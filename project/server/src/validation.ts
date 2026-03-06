@@ -1,9 +1,7 @@
 import { CreateTournamentRequest } from "./apiSchema";
 
 export function validateTournamentCreationRequest(data: any) {
-  console.log("Validating tournament creation request:", data);
-
-  const hasValidName =
+   const hasValidName =
     data && typeof data.name === "string" && data.name.trim().length > 0;
   const hasValidBrackets =
     data &&
