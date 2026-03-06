@@ -6,17 +6,16 @@
     // Prevent form submission from refreshing page
     event.preventDefault();
 
-    // TODO: Redirect to bracket page with selected tournament
-    console.log("Selected tournament:", selectedTournament);
+    // Redirect to tournament management page
+    window.location.href = `/manage-tournament?tournament=${encodeURIComponent(selectedTournament)}`;
   }
 
   $effect(() => {
-    (async () => {
-      // Get tournaments from server using GET request
-      const response = await fetch("/api/get-tournaments", { method: "GET" });
-      const data = await response.json();
-      tournaments = data.tournaments;
-    })();
+    fetch("/api/get-tournaments", { method: "GET" })
+      .then((response) => response.json())
+      .then((data) => {
+        tournaments = data.tournaments;
+      });
   });
 
   let tournaments = $state<BracketSelectionType[]>([]);

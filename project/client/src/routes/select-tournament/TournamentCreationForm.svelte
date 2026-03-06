@@ -40,6 +40,7 @@
       selectedBracketTypes = [
         ...selectedBracketTypes,
         ...Array(bracketCount - currentCount).fill({
+          name: "",
           type: null,
           numPlayers: 4,
         }),
@@ -88,6 +89,16 @@
           bind:value={bracket.type}
           required
           class="w-full rounded-md border-gray-400"
+        />
+      </div>
+      <div class="mb-3">
+        <Label for="bracket-name-{i}" class="font-medium">Bracket Name</Label>
+        <Input
+          name="bracket-name-{i}"
+          type="text"
+          placeholder="Bracket Name"
+          bind:value={bracket.name}
+          required
         />
       </div>
       <div class="mb-3">
