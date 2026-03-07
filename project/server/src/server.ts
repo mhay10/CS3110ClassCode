@@ -31,6 +31,10 @@ app.get("/select-tournament", (req: Request, res: Response) => {
   res.sendFile("./select-tournament.html", { root });
 });
 
+app.get("/manage-tournament", (req: Request, res: Response) => {
+  res.sendFile("./manage-tournament.html", { root });
+});
+
 // ====== API ROUTES ======
 
 app.post("/api/create-tournament", (req: Request, res: Response) => {
@@ -74,6 +78,26 @@ app.get("/api/get-tournaments", (req: Request, res: Response) => {
   res.status(200).json({ tournaments: listItems });
 });
 
+app.get("/api/tournament-data", (req: Request, res: Response) => {
+  // Make sure query parameter is provided
+  const tournamentName = req.query.tournament;
+  if (!tournamentName) {
+    res.status(400).json({ error: "Missing tournamentName query parameter" });
+    return;
+  }
+
+  // Query tournament data from database
+  db.find({ name: tournamentName }).exec((err, matches) => {
+    if (err) console.error("Error querying tournament from database:", err);
+
+    if (matches.length === 0) {
+      res.status(404).json({ error: "Tournament not found" });
+    } else {
+      res.status(200).json({ tournament: matches[0] });
+    }
+  });
+});
+
 // Placeholder routes for future CRUD operations
-app.put("/api/update", (req: Request, res: Response) => {});
-app.delete("/api/delete", (req: Request, res: Response) => {});
+app.put("/api/add-player", (req: Request, res: Response) => {});
+app.delete("/api/remove-player", (req: Request, res: Response) => {});
