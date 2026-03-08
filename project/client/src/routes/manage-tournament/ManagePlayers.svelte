@@ -45,6 +45,7 @@
 
     // Refresh snapshot
     originalPlayers = selectedBracket.players.map((p) => ({ ...p }));
+    alert("Players updated successfully!");
   }
 
   async function addPlayers() {

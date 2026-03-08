@@ -13,6 +13,9 @@ services:
       - ./nginx-conf.d:/etc/nginx/conf.d:ro
       - ./certs:/etc/letsencrypt:ro
     restart: unless-stopped
+    depends_on:
+      project-client:
+        condition: service_completed_successfully
 
   certbot:
     image: certbot/dns-cloudflare
