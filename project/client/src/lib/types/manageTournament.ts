@@ -17,7 +17,7 @@ export interface Round {
   round: number;
   matches: Match[];
 }
-  
+
 export interface Bracket {
   name: string;
   type: "singles" | "doubles";

@@ -2,10 +2,11 @@
   import { page } from "$app/state";
   import type { Tournament } from "$lib/types/manageTournament";
   import { onMount } from "svelte";
+  import ManagePlayers from "./ManagePlayers.svelte";
+  import ManageBrackets from "./ManageBrackets.svelte";
 
   let params = $state<{ [k: string]: string }>({});
   let tournamentData = $state<Tournament | null>(null);
-  let hasTournamentData = $derived(!!tournamentData);
   let managingPlayers = $state(true);
 
   onMount(() => {
@@ -17,7 +18,6 @@
         .then((res) => res.json())
         .then((data) => {
           tournamentData = data;
-          console.log("Tournament Data:", tournamentData);
         });
     }
   });
@@ -46,11 +46,11 @@
   </nav>
 </header>
 
-{#if hasTournamentData}
+{#if !!tournamentData}
   {#if managingPlayers}
-    <h1>Manage Players</h1>
+    <ManagePlayers {tournamentData} />
   {:else}
-    <h1>Manage Brackets</h1>
+    <ManageBrackets {tournamentData} />
   {/if}
 {:else}
   <h1>Tournament Not Found</h1>

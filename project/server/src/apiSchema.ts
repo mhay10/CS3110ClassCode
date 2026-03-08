@@ -8,3 +8,15 @@ export interface CreateTournamentRequest {
     },
   ];
 }
+
+export interface BulkPlayerEntry {
+  playerName: string;
+  playerIndex: number;
+  playerSeed: number;
+}
+
+export interface BulkPlayerRequest {
+  tournamentName: string;
+  bracketName: string;
+  players: BulkPlayerEntry[];
+}

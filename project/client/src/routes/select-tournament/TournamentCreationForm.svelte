@@ -21,7 +21,13 @@
       body: JSON.stringify(tournamentData),
     });
 
-    console.log(response.ok);
+    // Redirect to tournament manage page
+    if (response.ok) {
+      const data = await response.json();
+      window.location.href = `/manage-tournament?tournament=${encodeURIComponent(tournamentName)}`;
+    } else {
+      alert("Failed to create tournament");
+    }
   }
 
   let tournamentName = $state<string>("");

@@ -1,7 +1,15 @@
 import express, { Request, Response } from "express";
-import { validateTournamentCreationRequest } from "./validation";
-import { CreateTournamentRequest } from "./apiSchema";
-import { createBracket, createTournament, Tournament } from "./dbSchema";
+import {
+  validateTournamentCreationRequest,
+  validateBulkPlayerRequest,
+} from "./validation";
+import { BulkPlayerRequest, CreateTournamentRequest } from "./apiSchema";
+import {
+  createBracket,
+  createPlayer,
+  createTournament,
+  Tournament,
+} from "./dbSchema";
 import { db } from "./db";
 
 // Serve static files from client build directory
@@ -45,20 +53,22 @@ app.post("/api/create-tournament", (req: Request, res: Response) => {
     return;
   }
 
-  // Insert tournament into database
+  // Build tournament and bracket objects from request
   const { name, brackets } = req.body as CreateTournamentRequest;
   const tournament = createTournament(name);
   tournament.brackets = brackets.map((b) => {
     const tmpBracket = createBracket(b.name, b.type);
-    tmpBracket.players = Array(b.numPlayers).fill(null);
+    tmpBracket.players = Array(b.numPlayers).fill(createPlayer("", -1));
     return tmpBracket;
   });
 
+  // Insert tournament into database
   db.insert(tournament, (err) => {
     if (err) console.error("Error inserting tournament into database:", err);
   });
   console.log("Created tournament:", tournament);
 
+  // Return created tournament
   res
     .status(200)
     .json({ message: "Tournament created successfully", tournament });
@@ -98,6 +108,130 @@ app.get("/api/tournament-data", (req: Request, res: Response) => {
   });
 });
 
-// Placeholder routes for future CRUD operations
-app.put("/api/add-player", (req: Request, res: Response) => {});
-app.delete("/api/remove-player", (req: Request, res: Response) => {});
+app.put("/api/add-players", (req: Request, res: Response) => {
+  // Validate request body
+  if (!validateBulkPlayerRequest(req.body)) {
+    res.status(400).json({ error: "Missing or invalid fields" });
+    return;
+  }
+
+  const { tournamentName, bracketName, players } =
+    req.body as BulkPlayerRequest;
+
+  // Find the tournament by name
+  db.find({ name: tournamentName }).exec(
+    (err: Error | null, matches: Tournament[]) => {
+      if (err) {
+        console.error("Error querying tournament:", err);
+        return;
+      }
+      if (matches.length === 0) {
+        res.status(404).json({ error: "Tournament not found" });
+        return;
+      }
+
+      // Find the bracket by name
+      const tournament = matches[0];
+      const bracket = tournament.brackets.find((b) => b.name === bracketName);
+      if (!bracket) {
+        res.status(404).json({ error: "Bracket not found" });
+        return;
+      }
+
+      // Add each player at the specified index
+      for (const { playerName, playerIndex, playerSeed } of players) {
+        if (playerIndex < 0 || playerIndex >= bracket.players.length) {
+          res
+            .status(400)
+            .json({ error: `Player index ${playerIndex} out of range` });
+          return;
+        }
+        bracket.players[playerIndex] = createPlayer(playerName, playerSeed);
+      }
+
+      // Save updated tournament to database
+      db.update(
+        { name: tournamentName },
+        tournament,
+        {},
+        (updateErr: Error | null) => {
+          if (updateErr) {
+            console.error("Error updating tournament:", updateErr);
+            return;
+          }
+          res
+            .status(200)
+            .json({ message: "Players added successfully", tournament });
+        },
+      );
+    },
+  );
+});
+
+app.delete("/api/remove-players", (req: Request, res: Response) => {
+  // Validate request body
+  if (!validateBulkPlayerRequest(req.body)) {
+    res.status(400).json({ error: "Missing or invalid fields" });
+    return;
+  }
+
+  const { tournamentName, bracketName, players } =
+    req.body as BulkPlayerRequest;
+
+  // Find the tournament by name
+  db.find({ name: tournamentName }).exec(
+    (err: Error | null, matches: Tournament[]) => {
+      if (err) {
+        console.error("Error querying tournament:", err);
+        return;
+      }
+      if (matches.length === 0) {
+        res.status(404).json({ error: "Tournament not found" });
+        return;
+      }
+
+      // Find the bracket by name
+      const tournament = matches[0];
+      const bracket = tournament.brackets.find((b) => b.name === bracketName);
+      if (!bracket) {
+        res.status(404).json({ error: "Bracket not found" });
+        return;
+      }
+
+      // Clear each specified player slot
+      for (const { playerName, playerIndex } of players) {
+        if (playerIndex < 0 || playerIndex >= bracket.players.length) {
+          res
+            .status(400)
+            .json({ error: `Player index ${playerIndex} out of range` });
+          return;
+        }
+
+        // Verify the player name matches before removing
+        if (bracket.players[playerIndex].name !== playerName) {
+          res.status(400).json({
+            error: `Player name does not match at index ${playerIndex}`,
+          });
+          return;
+        }
+        bracket.players[playerIndex] = createPlayer("", -1);
+      }
+
+      // Save updated tournament to database
+      db.update(
+        { name: tournamentName },
+        tournament,
+        {},
+        (updateErr: Error | null) => {
+          if (updateErr) {
+            console.error("Error updating tournament:", updateErr);
+            return;
+          }
+          res
+            .status(200)
+            .json({ message: "Players removed successfully", tournament });
+        },
+      );
+    },
+  );
+});
