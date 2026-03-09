@@ -1,4 +1,4 @@
-# Sprint Reflection - 2/28/2025
+# Sprint Reflection 1
 
 **Project:** Tennis Tournament Manager  
 **Author:** Maxwell Hay (solo project)
