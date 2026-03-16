@@ -1,10 +1,10 @@
 export interface BracketCreationType {
-  name: string;
-  type: string;
-  numPlayers: number;
+    name: string;
+    type: string;
+    numPlayers: number;
 }
 
 export interface BracketSelectionType {
-  value: string;
-  name: string;
+    value: string;
+    name: string;
 }
