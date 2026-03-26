@@ -31,3 +31,9 @@ export interface Tournament {
     createdAt: Date;
     brackets: Bracket[];
 }
+
+export interface TournamentProps {
+    tournamentData: {
+        tournament: Tournament;
+    };
+}

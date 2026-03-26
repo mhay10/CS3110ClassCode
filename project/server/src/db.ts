@@ -153,6 +153,95 @@ export function removePlayersFromTournament(
     });
 }
 
+/**
+ * Update a tournament's name.
+ * Returns a Promise resolving to updated tournament or error.
+ */
+export function updateTournamentName(
+    oldName: string,
+    newName: string,
+): Promise<{ tournament?: Tournament; error?: string }> {
+    return new Promise((resolve) => {
+        // Find the tournament by old name
+        db.find({ name: oldName }).exec(
+            (err: Error | null, matches: Tournament[]) => {
+                if (err) {
+                    // Database error
+                    resolve({ error: "Error querying tournament" });
+                    return;
+                }
+
+                if (matches.length === 0) {
+                    // Tournament not found
+                    resolve({ error: "Tournament not found" });
+                    return;
+                }
+
+                const tournament = matches[0];
+
+                // Update the tournament name
+                tournament.name = newName;
+
+                // Save updated tournament to database
+                db.update(
+                    { name: oldName },
+                    tournament,
+                    {},
+                    (updateErr: Error | null) => {
+                        if (updateErr) {
+                            resolve({ error: "Error updating tournament" });
+                            return;
+                        }
+
+                        resolve({ tournament });
+                    },
+                );
+            },
+        );
+    });
+}
+
+/**
+ * Delete a tournament.
+ * Returns a Promise resolving to success message or error.
+ */
+export function deleteTournament(
+    tournamentName: string,
+): Promise<{ success?: boolean; error?: string }> {
+    return new Promise((resolve) => {
+        // Find the tournament by name
+        db.find({ name: tournamentName }).exec(
+            (err: Error | null, matches: Tournament[]) => {
+                if (err) {
+                    // Database error
+                    resolve({ error: "Error querying tournament" });
+                    return;
+                }
+
+                if (matches.length === 0) {
+                    // Tournament not found
+                    resolve({ error: "Tournament not found" });
+                    return;
+                }
+
+                // Remove the tournament from database
+                db.remove(
+                    { name: tournamentName },
+                    {},
+                    (removeErr: Error | null) => {
+                        if (removeErr) {
+                            resolve({ error: "Error deleting tournament" });
+                            return;
+                        }
+
+                        resolve({ success: true });
+                    },
+                );
+            },
+        );
+    });
+}
+
 // Find user by username
 export function findUserByUsername(username: string): Promise<any> {
     return new Promise((resolve) => {

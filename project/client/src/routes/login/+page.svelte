@@ -1,5 +1,7 @@
 <script lang="ts">
     import { Button, Input, Label } from "flowbite-svelte";
+    import { setToken } from "$lib/auth";
+    import { goto } from "$app/navigation";
 
     let creatingAccount = false;
     let username = "";
@@ -45,10 +47,10 @@
             if (!res.ok) {
                 errorMsg = data.error || "Login failed";
             } else {
-                // Store JWT token
-                localStorage.setItem("token", data.token);
-                // Redirect to home
-                window.location.href = "/select-tournament";
+                // Store JWT token and update auth store
+                setToken(data.token);
+                // Redirect to tournament selection
+                goto("/select-tournament");
             }
         } catch (e) {
             errorMsg = "Server error";

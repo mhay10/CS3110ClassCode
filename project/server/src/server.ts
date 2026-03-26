@@ -16,7 +16,12 @@ import {
     Tournament,
 } from "./dbSchema";
 import { db } from "./db";
-import { addPlayersToTournament, removePlayersFromTournament } from "./db";
+import {
+    addPlayersToTournament,
+    removePlayersFromTournament,
+    updateTournamentName,
+    deleteTournament,
+} from "./db";
 
 // Serve static files from client build directory
 const root = "../client/build/";
@@ -299,5 +304,56 @@ app.delete("/api/remove-players", async (req: Request, res: Response) => {
     res.status(200).json({
         message: "Players removed successfully",
         tournament: result.tournament,
+    });
+});
+
+app.put("/api/update-tournament", async (req: Request, res: Response) => {
+    // Validate request body
+    if (!req.body.oldName || !req.body.newName) {
+        res.status(400).json({ error: "Missing oldName or newName" });
+        return;
+    }
+    const { oldName, newName } = req.body;
+
+    // Get result of db operation
+    const result = await updateTournamentName(oldName, newName);
+
+    // Handle errors and return response
+    if (result.error) {
+        if (result.error.includes("not found")) {
+            res.status(404).json({ error: result.error });
+        } else {
+            res.status(400).json({ error: result.error });
+        }
+        return;
+    }
+    res.status(200).json({
+        message: "Tournament updated successfully",
+        tournament: result.tournament,
+    });
+});
+
+app.delete("/api/delete-tournament", async (req: Request, res: Response) => {
+    // Validate request body
+    if (!req.body.tournamentName) {
+        res.status(400).json({ error: "Missing tournamentName" });
+        return;
+    }
+    const { tournamentName } = req.body;
+
+    // Get result of db operation
+    const result = await deleteTournament(tournamentName);
+
+    // Handle errors and return response
+    if (result.error) {
+        if (result.error.includes("not found")) {
+            res.status(404).json({ error: result.error });
+        } else {
+            res.status(400).json({ error: result.error });
+        }
+        return;
+    }
+    res.status(200).json({
+        message: "Tournament deleted successfully",
     });
 });
