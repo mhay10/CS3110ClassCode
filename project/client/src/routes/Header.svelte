@@ -37,6 +37,7 @@
     >
         <NavLi href="/">Home</NavLi>
         <NavLi href="/about">About</NavLi>
+        <NavLi href="/view-tournament">Guest View</NavLi>
         <NavLi>
             {#if $isLoggedIn}
                 <button

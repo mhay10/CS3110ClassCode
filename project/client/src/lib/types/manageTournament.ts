@@ -30,6 +30,8 @@ export interface Tournament {
     name: string;
     createdAt: Date;
     brackets: Bracket[];
+    lastModifiedBy?: string;
+    lastUpdatedAt?: Date | string;
 }
 
 export interface TournamentProps {

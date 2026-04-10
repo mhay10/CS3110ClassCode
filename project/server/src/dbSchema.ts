@@ -42,6 +42,8 @@ export interface Tournament {
     createdAt: Date;
     brackets: Bracket[];
     ownerId: string; // references User.id
+    lastModifiedBy?: string; // Used to identify who last modified this tournament
+    lastUpdatedAt?: Date;
 }
 
 export function createPlayer(name: string, seed: number): Player {

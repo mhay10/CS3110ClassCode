@@ -11,6 +11,7 @@ export function addPlayersToTournament(
     tournamentName: string,
     bracketName: string,
     players: { playerName: string; playerIndex: number; playerSeed: number }[],
+    modifiedBy?: string,
 ): Promise<{ tournament?: Tournament; error?: string }> {
     return new Promise((resolve) => {
         // Find the tournament by name
@@ -56,6 +57,10 @@ export function addPlayersToTournament(
                     );
                 }
 
+                if (modifiedBy) {
+                    tournament.lastModifiedBy = modifiedBy;
+                }
+                tournament.lastUpdatedAt = new Date();
                 // Save updated tournament to database
                 db.update(
                     { name: tournamentName },
@@ -83,6 +88,7 @@ export function removePlayersFromTournament(
     tournamentName: string,
     bracketName: string,
     players: { playerName: string; playerIndex: number }[],
+    modifiedBy?: string,
 ): Promise<{ tournament?: Tournament; error?: string }> {
     return new Promise((resolve) => {
         // Find the tournament by name
@@ -134,6 +140,10 @@ export function removePlayersFromTournament(
                     bracket.players[playerIndex] = createPlayer("", -1);
                 }
 
+                if (modifiedBy) {
+                    tournament.lastModifiedBy = modifiedBy;
+                }
+                tournament.lastUpdatedAt = new Date();
                 // Save updated tournament to database
                 db.update(
                     { name: tournamentName },
@@ -160,6 +170,7 @@ export function removePlayersFromTournament(
 export function updateTournamentName(
     oldName: string,
     newName: string,
+    modifiedBy?: string,
 ): Promise<{ tournament?: Tournament; error?: string }> {
     return new Promise((resolve) => {
         // Find the tournament by old name
@@ -179,6 +190,10 @@ export function updateTournamentName(
 
                 const tournament = matches[0];
 
+                if (modifiedBy) {
+                    tournament.lastModifiedBy = modifiedBy;
+                    tournament.lastUpdatedAt = new Date();
+                }
                 // Update the tournament name
                 tournament.name = newName;
 

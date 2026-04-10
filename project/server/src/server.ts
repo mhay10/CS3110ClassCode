@@ -50,6 +50,10 @@ app.get("/select-tournament", (req: Request, res: Response) => {
     res.sendFile("./select-tournament.html", { root });
 });
 
+app.get("/view-tournament", (req: Request, res: Response) => {
+    res.sendFile("./view-tournament.html", { root });
+});
+
 app.get("/manage-tournament", (req: Request, res: Response) => {
     res.sendFile("./manage-tournament.html", { root });
 });
@@ -173,6 +177,27 @@ app.post("/api/create-tournament", (req: Request, res: Response) => {
     }
 });
 
+app.get("/api/public-tournaments", (req: Request, res: Response) => {
+    try {
+        const tournaments = db.getAllData() as Tournament[];
+        if (!tournaments || tournaments.length === 0) {
+            res.status(200).json({ tournaments: [] });
+            return;
+        }
+
+        const listItems = tournaments
+            .map((t) => ({
+                value: t.name,
+                name: t.name,
+            }))
+            .filter((t) => t.value && t.name);
+
+        res.status(200).json({ tournaments: listItems });
+    } catch {
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 app.get("/api/get-tournaments", (req: Request, res: Response) => {
     // Verify user authentication
     const auth = req.headers.authorization;
@@ -254,11 +279,24 @@ app.put("/api/add-players", async (req: Request, res: Response) => {
     const { tournamentName, bracketName, players } =
         req.body as BulkPlayerRequest;
 
+    // Get who modified it
+    let modifiedBy = "Anonymous " + req.ip;
+    const auth = req.headers.authorization;
+    if (auth) {
+        try {
+            const decoded = jwt.verify(auth.split(" ")[1], SECRET) as {
+                username: string;
+            };
+            modifiedBy = decoded.username;
+        } catch (err) {}
+    }
+
     // Get result of db operation
     const result = await addPlayersToTournament(
         tournamentName,
         bracketName,
         players,
+        modifiedBy,
     );
 
     // Handle errors and return response
@@ -285,11 +323,24 @@ app.delete("/api/remove-players", async (req: Request, res: Response) => {
     const { tournamentName, bracketName, players } =
         req.body as BulkPlayerRequest;
 
+    // Get who modified it
+    let modifiedBy = "Anonymous " + req.ip;
+    const auth = req.headers.authorization;
+    if (auth) {
+        try {
+            const decoded = jwt.verify(auth.split(" ")[1], SECRET) as {
+                username: string;
+            };
+            modifiedBy = decoded.username;
+        } catch (err) {}
+    }
+
     // Get result of db operation
     const result = await removePlayersFromTournament(
         tournamentName,
         bracketName,
         players,
+        modifiedBy,
     );
 
     // Handle errors and return response
@@ -315,8 +366,20 @@ app.put("/api/update-tournament", async (req: Request, res: Response) => {
     }
     const { oldName, newName } = req.body;
 
+    // Get who modified it
+    let modifiedBy = "Anonymous " + req.ip;
+    const auth = req.headers.authorization;
+    if (auth) {
+        try {
+            const decoded = jwt.verify(auth.split(" ")[1], SECRET) as {
+                username: string;
+            };
+            modifiedBy = decoded.username;
+        } catch (err) {}
+    }
+
     // Get result of db operation
-    const result = await updateTournamentName(oldName, newName);
+    const result = await updateTournamentName(oldName, newName, modifiedBy);
 
     // Handle errors and return response
     if (result.error) {
