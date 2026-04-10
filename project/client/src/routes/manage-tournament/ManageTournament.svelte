@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Tournament } from "$lib/types/manageTournament";
     import { Input, Label } from "flowbite-svelte";
+    import { token } from "$lib/auth";
 
     let { tournamentData } = $props();
 
@@ -17,9 +18,16 @@
         successMessage = "";
 
         try {
+            const headers: Record<string, string> = {
+                "Content-Type": "application/json",
+            };
+            if ($token) {
+                headers["Authorization"] = `Bearer ${$token}`;
+            }
+
             const response = await fetch("/api/update-tournament", {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers,
                 body: JSON.stringify({
                     oldName: tournament.name,
                     newName: tournamentName,
@@ -71,9 +79,16 @@
         errorMessage = "";
 
         try {
+            const headers: Record<string, string> = {
+                "Content-Type": "application/json",
+            };
+            if ($token) {
+                headers["Authorization"] = `Bearer ${$token}`;
+            }
+
             const response = await fetch("/api/delete-tournament", {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json" },
+                headers,
                 body: JSON.stringify({
                     tournamentName: tournament.name,
                 }),

@@ -5,6 +5,7 @@
         Tournament,
     } from "$lib/types/manageTournament";
     import { untrack } from "svelte";
+    import { token } from "$lib/auth";
     import { Input, Label, Select } from "flowbite-svelte";
 
     let { tournamentData } = $props();
@@ -96,9 +97,16 @@
 
         if (players.length === 0) return;
 
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+        };
+        if ($token) {
+            headers["Authorization"] = `Bearer ${$token}`;
+        }
+
         await fetch("/api/add-players", {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers,
             body: JSON.stringify({
                 tournamentName: tournament.name,
                 bracketName: selectedBracketName,
@@ -128,9 +136,16 @@
 
         if (players.length === 0) return;
 
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+        };
+        if ($token) {
+            headers["Authorization"] = `Bearer ${$token}`;
+        }
+
         await fetch("/api/remove-players", {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" },
+            headers,
             body: JSON.stringify({
                 tournamentName: tournament.name,
                 bracketName: selectedBracketName,

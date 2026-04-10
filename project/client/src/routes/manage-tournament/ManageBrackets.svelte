@@ -42,7 +42,8 @@
         <span class="font-semibold text-blue-600"
             >Last updated at: {new Date(
                 liveTournamentData.lastUpdatedAt,
-            ).toLocaleString()}</span
+            ).toLocaleString()}
+            by {liveTournamentData?.lastModifiedBy || "Unknown"}</span
         >
     {:else}
         <i>No recent updates.</i>
