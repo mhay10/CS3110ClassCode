@@ -72,6 +72,45 @@ export function createTournament(name: string, ownerId: string): Tournament {
     };
 }
 
+export function generateSeededFirstRound(bracket: Bracket): Match[] {
+    // Filter out empty players (seed -1 indicates empty slot)
+    const activePlayers = bracket.players.filter((p) => p.seed >= 0);
+
+    // Sort players by seed number
+    const sortedPlayers = activePlayers.sort((a, b) => a.seed - b.seed);
+
+    const matches: Match[] = [];
+
+    // Pair seed 1 with highest seed, seed 2 with second-highest, etc.
+    for (let i = 0; i < sortedPlayers.length; i += 2) {
+        const player1 = sortedPlayers[i];
+        const player2 = sortedPlayers[sortedPlayers.length - 1 - i];
+
+        // Avoid pairing same player if odd number of players
+        if (player1.id === player2.id) {
+            matches.push({
+                id: uuidv4(),
+                player1Id: player1.id,
+                player2Id: null,
+                winnerId: null,
+                score: null,
+                status: "pending",
+            });
+        } else {
+            matches.push({
+                id: uuidv4(),
+                player1Id: player1.id,
+                player2Id: player2.id,
+                winnerId: null,
+                score: null,
+                status: "pending",
+            });
+        }
+    }
+
+    return matches;
+}
+
 export function generateMatchRounds(bracket: Bracket): Bracket {
     const players = Array.from(bracket.players);
     const numRounds = Math.ceil(Math.log2(players.length));

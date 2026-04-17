@@ -1,5 +1,5 @@
 import Datastore from "nestdb";
-import { Tournament, createPlayer } from "./dbSchema";
+import { Tournament, createPlayer, generateSeededFirstRound } from "./dbSchema";
 
 export const db = new Datastore({ filename: "project.db", autoload: true });
 
@@ -56,6 +56,9 @@ export function addPlayersToTournament(
                         playerSeed,
                     );
                 }
+
+                // Regenerate first-round matches based on updated seeds
+                bracket.matches = generateSeededFirstRound(bracket);
 
                 if (modifiedBy) {
                     tournament.lastModifiedBy = modifiedBy;
@@ -139,6 +142,9 @@ export function removePlayersFromTournament(
 
                     bracket.players[playerIndex] = createPlayer("", -1);
                 }
+
+                // Regenerate first-round matches based on updated seeds
+                bracket.matches = generateSeededFirstRound(bracket);
 
                 if (modifiedBy) {
                     tournament.lastModifiedBy = modifiedBy;
