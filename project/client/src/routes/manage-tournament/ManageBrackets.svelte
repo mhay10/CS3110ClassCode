@@ -60,13 +60,7 @@
                             });
 
                             // Vibrate mobile device for 500ms
-                            const isMobile =
-                                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                                    navigator.userAgent,
-                                );
-                            if (isMobile && navigator.vibrate) {
-                                navigator.vibrate(500);
-                            }
+                            navigator.vibrate(500);
 
                             // Update last updated time
                             lastUpdatedAt = new Date(serverUpdatedAt);
