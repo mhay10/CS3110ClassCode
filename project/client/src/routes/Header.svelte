@@ -1,11 +1,9 @@
 <script lang="ts">
-    import { page } from "$app/state";
     import { goto } from "$app/navigation";
-    import { Navbar, NavBrand, NavLi, NavUl } from "flowbite-svelte";
     import { isLoggedIn, logout } from "$lib/auth";
     import tennisball from "$lib/assets/tennisball.svg";
 
-    const activeUrl = $derived(page.url.pathname);
+    let open = false;
 
     async function handleLogout() {
         if (confirm("Are you sure you want to logout?")) {
@@ -19,41 +17,49 @@
     }
 </script>
 
-<Navbar class="sticky top-0 bg-gray-800 text-white p-2 w-full" fluid={true}>
-    <NavBrand href="/" class="ml-40">
-        <img src={tennisball} alt="tennis ball icon bg" />
-        <span class="ml-4 self-center whitespace-nowrap text-xl font-semibold">
-            Tennis Tournament Manager
-        </span>
-    </NavBrand>
-    <NavUl
-        {activeUrl}
-        class="!w-auto ml-auto mr-50"
-        classes={{
-            active: "font-bold underline text-white",
-            nonActive: "text-slate-300",
-            ul: "flex-row p-0 space-x-4 mt-0 text-sm font-medium bg-gray-800",
-        }}
-    >
-        <NavLi href="/">Home</NavLi>
-        <NavLi href="/about">About</NavLi>
-        <NavLi href="/view-tournament">Guest View</NavLi>
-        <NavLi>
+<header class="sticky top-0 bg-gray-800 text-white w-full z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="flex items-center">
+                <img src={tennisball} alt="tennis ball icon" class="h-8 w-8" />
+                <span class="ml-3 text-xl font-semibold whitespace-nowrap">Tennis Tournament Manager</span>
+            </a>
+
+            <div class="flex items-center">
+                <button class="md:hidden p-2 rounded hover:bg-gray-700" on:click={() => (open = !open)} aria-label="Toggle menu" aria-expanded={open}>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        {#if !open}
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        {:else}
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        {/if}
+                    </svg>
+                </button>
+
+                <nav class="hidden md:flex md:items-center md:space-x-6 ml-4">
+                    <a href="/" class="text-slate-300 hover:text-white transition-colors">Home</a>
+                    <a href="/about" class="text-slate-300 hover:text-white transition-colors">About</a>
+                    <a href="/view-tournament" class="text-slate-300 hover:text-white transition-colors">Guest View</a>
+                    {#if $isLoggedIn}
+                        <button on:click={handleLogout} class="text-slate-300 hover:text-white transition-colors">Logout</button>
+                    {:else}
+                        <button on:click={handleLogin} class="text-slate-300 hover:text-white transition-colors">Login</button>
+                    {/if}
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    {#if open}
+        <div class="md:hidden px-2 pb-3 space-y-1 bg-gray-800">
+            <a href="/" class="block px-3 py-2 rounded text-slate-300 hover:text-white transition-colors">Home</a>
+            <a href="/about" class="block px-3 py-2 rounded text-slate-300 hover:text-white transition-colors">About</a>
+            <a href="/view-tournament" class="block px-3 py-2 rounded text-slate-300 hover:text-white transition-colors">Guest View</a>
             {#if $isLoggedIn}
-                <button
-                    onclick={handleLogout}
-                    class="text-slate-300 hover:text-white transition-colors"
-                >
-                    Logout
-                </button>
+                <button on:click={handleLogout} class="w-full text-left px-3 py-2 rounded text-slate-300 hover:text-white transition-colors">Logout</button>
             {:else}
-                <button
-                    onclick={handleLogin}
-                    class="text-slate-300 hover:text-white transition-colors"
-                >
-                    Login
-                </button>
+                <button on:click={handleLogin} class="w-full text-left px-3 py-2 rounded text-slate-300 hover:text-white transition-colors">Login</button>
             {/if}
-        </NavLi>
-    </NavUl>
-</Navbar>
+        </div>
+    {/if}
+</header>
