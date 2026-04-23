@@ -9,6 +9,7 @@
 
     let { tournamentData }: TournamentProps = $props();
 
+    let lastUpdatedAt = $state<Date>(new Date(0));
     let liveTournamentData = $state<Tournament | null>(null);
     let intervalId: any;
 
@@ -29,7 +30,9 @@
             : [],
     );
 
-    onMount(() => {
+    onMount(async () => {
+        await Notification.requestPermission();
+
         liveTournamentData = tournamentData.tournament;
 
         const fetchTournament = async () => {
@@ -42,6 +45,33 @@
                 if (res.ok) {
                     const data = await res.json();
                     liveTournamentData = data.tournament;
+
+                    // Notify mobile user
+                    const serverUpdatedAt = new Date(
+                        data.tournament.lastUpdatedAt,
+                    ).getTime();
+                    if (serverUpdatedAt > lastUpdatedAt.getTime()) {
+                        console.log("Tournament updated, sending notification");
+
+                        if (Notification.permission === "granted") {
+                            // Send notification about update
+                            new Notification("Tournament Updated", {
+                                body: `The tournament "${liveTournamentData?.name}" has been updated.`,
+                            });
+
+                            // Vibrate mobile device for 500ms
+                            const isMobile =
+                                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                                    navigator.userAgent,
+                                );
+                            if (isMobile && navigator.vibrate) {
+                                navigator.vibrate(500);
+                            }
+
+                            // Update last updated time
+                            lastUpdatedAt = new Date(serverUpdatedAt);
+                        }
+                    }
                 }
             } catch (err) {
                 console.error("Live update failed", err);

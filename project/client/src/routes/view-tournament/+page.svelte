@@ -53,7 +53,6 @@
                 Viewing Bracket: {tournamentData.tournament.name}
             </h2>
             <div class="mb-6">
-                <!-- We pass tournament from within tournamentData object as props correctly expected by ManageBrackets component -->
                 <ManageBrackets {tournamentData} />
             </div>
             <div class="mt-4">
