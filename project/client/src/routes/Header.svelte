@@ -75,6 +75,13 @@
                         >Guest View</a
                     >
                     {#if $isLoggedIn}
+                        <a
+                            href="/select-tournament"
+                            class="text-slate-300 hover:text-white transition-colors"
+                            >Tournaments</a
+                        >
+                    {/if}
+                    {#if $isLoggedIn}
                         <button
                             on:click={handleLogout}
                             class="text-slate-300 hover:text-white transition-colors"
@@ -109,6 +116,13 @@
                 class="block px-3 py-2 rounded text-slate-300 hover:text-white transition-colors"
                 >Guest View</a
             >
+            {#if $isLoggedIn}
+                <a
+                    href="/select-tournament"
+                    class="block px-3 py-2 rounded text-slate-300 hover:text-white transition-colors"
+                    >Tournaments</a
+                >
+            {/if}
             {#if $isLoggedIn}
                 <button
                     on:click={handleLogout}

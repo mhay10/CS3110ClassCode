@@ -223,6 +223,75 @@ export function updateTournamentName(
 }
 
 /**
+ * Update match scores in a bracket.
+ * Returns a Promise resolving to updated tournament or error.
+ */
+export function updateMatchScores(
+    tournamentName: string,
+    bracketName: string,
+    scoresUpdates: {
+        matchId: string;
+        score: { p1: string; p2: string };
+        winnerId?: string | null;
+    }[],
+    modifiedBy?: string,
+): Promise<{ tournament?: Tournament; error?: string }> {
+    return new Promise((resolve) => {
+        db.find({ name: tournamentName }).exec(
+            (err: Error | null, matches: Tournament[]) => {
+                if (err) {
+                    resolve({ error: "Error querying tournament" });
+                    return;
+                }
+                if (matches.length === 0) {
+                    resolve({ error: "Tournament not found" });
+                    return;
+                }
+
+                const tournament = matches[0];
+                const bracket = tournament.brackets.find(
+                    (b) => b.name === bracketName,
+                );
+                if (!bracket) {
+                    resolve({ error: "Bracket not found" });
+                    return;
+                }
+
+                scoresUpdates.forEach((update) => {
+                    const match = bracket.matches.find(
+                        (m) => m.id === update.matchId,
+                    );
+                    if (match) {
+                        match.score = update.score;
+                        if (update.winnerId !== undefined) {
+                            match.winnerId = update.winnerId;
+                        }
+                    }
+                });
+
+                if (modifiedBy) {
+                    tournament.lastModifiedBy = modifiedBy;
+                }
+                tournament.lastUpdatedAt = new Date();
+
+                db.update(
+                    { name: tournamentName },
+                    tournament,
+                    {},
+                    (updateErr: Error | null) => {
+                        if (updateErr) {
+                            resolve({ error: "Error updating match scores" });
+                            return;
+                        }
+                        resolve({ tournament });
+                    },
+                );
+            },
+        );
+    });
+}
+
+/**
  * Delete a tournament.
  * Returns a Promise resolving to success message or error.
  */

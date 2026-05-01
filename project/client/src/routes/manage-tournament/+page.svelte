@@ -59,7 +59,7 @@
     {#if activeTab === "players"}
         <ManagePlayers {tournamentData} />
     {:else if activeTab === "brackets"}
-        <ManageBrackets {tournamentData} />
+        <ManageBrackets {tournamentData} isAdmin={true} />
     {:else if activeTab === "settings"}
         <ManageTournament {tournamentData} />
     {/if}

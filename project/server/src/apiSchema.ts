@@ -21,3 +21,15 @@ export interface BulkPlayerRequest {
     bracketName: string;
     players: BulkPlayerEntry[];
 }
+
+export interface MatchScoreUpdate {
+    matchId: string;
+    score: { p1: string; p2: string };
+    winnerId?: string | null;
+}
+
+export interface UpdateScoresRequest {
+    tournamentName: string;
+    bracketName: string;
+    scores: MatchScoreUpdate[];
+}

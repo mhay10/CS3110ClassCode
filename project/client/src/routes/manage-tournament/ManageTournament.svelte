@@ -2,6 +2,7 @@
     import type { Tournament } from "$lib/types/manageTournament";
     import { Input, Label } from "flowbite-svelte";
     import { token } from "$lib/auth";
+    import { goto } from "$app/navigation";
 
     let { tournamentData } = $props();
 
@@ -40,6 +41,15 @@
 
             successMessage = "Tournament updated successfully!";
             tournament.name = tournamentName;
+
+            // Update URL to the new tournament name so the page reflects the change
+            if (typeof window !== "undefined") {
+                const params = new URLSearchParams(window.location.search);
+                params.set("tournament", tournamentName);
+                await goto(window.location.pathname + "?" + params.toString(), {
+                    replaceState: true,
+                });
+            }
 
             // Clear success message after 3 seconds
             setTimeout(() => {

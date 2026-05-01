@@ -77,14 +77,19 @@
         <div class="mb-3 text-red-600">{errorMsg}</div>
     {/if}
 
-    <form on:submit={submitForm}>
+    <form on:submit={submitForm} autocomplete="off">
         <div class="mb-3">
             <Label for="username" class="font-medium">Username</Label>
             <Input
+                id="username"
                 name="username"
                 type="text"
                 placeholder="Username"
                 bind:value={username}
+                autocomplete="username"
+                autocorrect="off"
+                spellcheck={false}
+                autocapitalize="off"
                 required
             />
         </div>
@@ -93,10 +98,15 @@
             <div class="mb-3">
                 <Label for="email" class="font-medium">Email</Label>
                 <Input
+                    id="email"
                     name="email"
                     type="email"
                     placeholder="Email Address"
                     bind:value={email}
+                    autocomplete="email"
+                    autocorrect="off"
+                    spellcheck={false}
+                    autocapitalize="off"
                     required
                 />
             </div>
@@ -105,10 +115,17 @@
         <div class="mb-5">
             <Label for="password" class="font-medium">Password</Label>
             <Input
+                id="password"
                 name="password"
                 type="password"
                 placeholder="Password"
                 bind:value={password}
+                autocomplete={creatingAccount
+                    ? "new-password"
+                    : "current-password"}
+                autocorrect="off"
+                spellcheck={false}
+                autocapitalize="off"
                 required
             />
         </div>

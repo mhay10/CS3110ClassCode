@@ -7,8 +7,13 @@ import { findUserByUsername, createUser } from "./db";
 import {
     validateTournamentCreationRequest,
     validateBulkPlayerRequest,
+    validateUpdateScoresRequest,
 } from "./validation";
-import { BulkPlayerRequest, CreateTournamentRequest } from "./apiSchema";
+import {
+    BulkPlayerRequest,
+    CreateTournamentRequest,
+    UpdateScoresRequest,
+} from "./apiSchema";
 import {
     createBracket,
     createPlayer,
@@ -20,6 +25,7 @@ import {
     addPlayersToTournament,
     removePlayersFromTournament,
     updateTournamentName,
+    updateMatchScores,
     deleteTournament,
 } from "./db";
 
@@ -392,6 +398,50 @@ app.put("/api/update-tournament", async (req: Request, res: Response) => {
     }
     res.status(200).json({
         message: "Tournament updated successfully",
+        tournament: result.tournament,
+    });
+});
+
+app.put("/api/update-match-scores", async (req: Request, res: Response) => {
+    // Validate request body
+    if (!validateUpdateScoresRequest(req.body)) {
+        res.status(400).json({ error: "Missing or invalid fields" });
+        return;
+    }
+    const { tournamentName, bracketName, scores } =
+        req.body as UpdateScoresRequest;
+
+    // Get who modified it
+    let modifiedBy = "Anonymous " + req.ip;
+    const auth = req.headers.authorization;
+    if (auth) {
+        try {
+            const decoded = jwt.verify(auth.split(" ")[1], SECRET) as {
+                username: string;
+            };
+            modifiedBy = decoded.username;
+        } catch (err) {}
+    }
+
+    // Get result of db operation
+    const result = await updateMatchScores(
+        tournamentName,
+        bracketName,
+        scores,
+        modifiedBy,
+    );
+
+    // Handle errors and return response
+    if (result.error) {
+        if (result.error.includes("not found")) {
+            res.status(404).json({ error: result.error });
+        } else {
+            res.status(400).json({ error: result.error });
+        }
+        return;
+    }
+    res.status(200).json({
+        message: "Match scores updated successfully",
         tournament: result.tournament,
     });
 });

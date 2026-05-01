@@ -1,4 +1,8 @@
-import { BulkPlayerRequest, CreateTournamentRequest } from "./apiSchema";
+import {
+    BulkPlayerRequest,
+    CreateTournamentRequest,
+    UpdateScoresRequest,
+} from "./apiSchema";
 
 export function validateTournamentCreationRequest(data: any) {
     const hasValidName =
@@ -33,6 +37,27 @@ export function validateBulkPlayerRequest(
         )
     );
 }
+
+export function validateUpdateScoresRequest(
+    data: any,
+): data is UpdateScoresRequest {
+    return (
+        data &&
+        typeof data.tournamentName === "string" &&
+        data.tournamentName.trim().length > 0 &&
+        typeof data.bracketName === "string" &&
+        data.bracketName.trim().length > 0 &&
+        Array.isArray(data.scores) &&
+        data.scores.every(
+            (s: any) =>
+                typeof s.matchId === "string" &&
+                s.score &&
+                typeof s.score.p1 === "string" &&
+                typeof s.score.p2 === "string",
+        )
+    );
+}
+
 // Validate login input
 export function validateLoginInput(data: any) {
     return (
